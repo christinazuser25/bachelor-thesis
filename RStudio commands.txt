@@ -1,0 +1,53 @@
+RStudio commands
+
+
+xmo.merdged<-read.delim2("clipboard",stringsAsFactors = T,header=F,sep ="")
+#use <-read_table2()
+summary(xmo.merdged)
+fixed.genome.ids<-gsub('.txt',"",xmo.merdged[,1])
+smmo.hits<-mutate(xmo.merdged,genome.id=fixed.genome.ids)
+install.packages("readxl")
+
+setwd("C:/Users/chris/OneDrive/1 JKU/bachelor thesis/HQ bacterial genome")
+#use this in the begihning
+
+S1<-read_excel("supplementary table.xlsx",sheet="S1 habitat") %>% 
+  select(IMG_TAXON_ID,ECOSYSTEM:LONGITUDE)
+S2<-read_excel("supplementary table.xlsx",sheet="S2 id") %>% 
+  select(genome.id:IMG_TAXON_ID,species_id)
+S5<-read_excel("supplementary table.xlsx",sheet="S5 taxonomy") %>% 
+  select(species_id,gtdb_taxonomy)
+
+smmo.hits<-mutate(xmo.merdged,genome.id=fixed.genome.ids) %>% 
+  left_join(S2,by="genome.id") %>% 
+  left_join(S5,by="species_id") %>% 
+  left_join(S1,by="IMG_TAXON_ID") %>% 
+  glimpse
+
+  mutate(V6=as.numeric(V6))
+  glimpse
+  filter(V6<1e-14)
+  distinct(smmo.hits,genome.id)
+  
+#split column gtdb_taxonomy into domain, phylum, class, order, family, genus and species
+smmo.hits1<-separate(smmo.hits,col=gtdb_taxonomy,
+  into=c("domain","phylum","class","order","family","genus","species"),
+  sep=";")
+
+#delete unnessecary characters from columns
+smmo.hits1$domain<-sub("d__","",smmo.hits1$domain)
+smmo.hits1$phylum<-sub("p__","",smmo.hits1$phylum)
+smmo.hits1$class<-sub("c__","",smmo.hits1$class)
+smmo.hits1$order<-sub("o__","",smmo.hits1$order)
+smmo.hits1$family<-sub("f__","",smmo.hits1$family)
+smmo.hits1$genus<-sub("g__","",smmo.hits1$genus)
+smmo.hits1$species<-sub("s__","",smmo.hits1$species)
+
+smmo.hits.final<-smmo.hits1
+
+#smmo percentage
+147/(9143/100)
+
+#use barplot phyla
+phyla<-smmo.hits.final$phylum
+plot(factor(phyla),col="gray77",las=2,ylim=c(0,125))
