@@ -1,11 +1,6 @@
-Linux commands xmo merged
 
-	#counting of files
 
-ls "pipe command" wc -l
-
-	# add filename to first column
-
+	# add filename to first column of all files
 for i in *.txt; do nawk '{print FILENAME"\t"$0}' $i > $i.bk; mv $i.bk $i -f ; done
 
 	# will delete header until 4th row
