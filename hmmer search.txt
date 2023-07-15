@@ -1,37 +1,12 @@
-
-ssh -X 172.24.2.11 -l tlaskal 
-password (DsNHkc6mouIhr_W)
- change working directory
-
-	#copy smmo_model_aminoacid.hmm to computer
-
-scp smmo_model_aminoacid.hmm tlaskal@172.24.2.11:/working directory
-
-	#24959 genomes
-	#for every genome 3 different 
-	#create new folder and move all faa files in there
-
-mkdir faa
-mv *.faa faa/
-
-	#to copy all into one file
-
 for file in *.faa
 do
 genome_id=${file%%.faa}
-hmmsearch --tblout $genome_id.txt --noali --cpu 1 -E 1e-10 ../smmo_model_aminoacid.hmm ./$file
+hmmsearch --tblout $genome_id.txt --noali --cpu 1 -E 1e-10 ../filename.hmm ./$file
 done
-
-
-	#will display genome id and move it in a txt file
 
 
 for file in *.faa
 do
 genome_id=${file%%.faa}
-echo $genome_id >> genome_list.txt
+echo $genome_id
 done
-
-	#backup all txt files
- 
-
