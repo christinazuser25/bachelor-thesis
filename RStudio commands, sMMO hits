@@ -54,10 +54,9 @@ library("writexl")
 data <- smmo.hits.final
 
 # Specify the file path and name for the Excel file
-file_path <- "smmo.hits.final.xlsx"
+file <- "smmo.hits.final.MAGs.xlsx"
 
 # Save the data to an Excel file
-write_xlsx(data, file_path)
+write_xlsx(data, file)
 
-# Confirmation message
-cat("Data saved to", file_path, "successfully.")
+
