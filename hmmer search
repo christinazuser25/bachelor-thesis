@@ -1,10 +1,13 @@
+#HMMER search with C
+
+#copy all faa files into one file
 for file in *.faa
 do
 genome_id=${file%%.faa}
 hmmsearch --tblout $genome_id.txt --noali --cpu 1 -E 1e-10 ../filename.hmm ./$file
 done
 
-
+#will display genome id and move it in a txt file
 for file in *.faa
 do
 genome_id=${file%%.faa}
