@@ -1,3 +1,7 @@
+#RStudio code, MAGs sMMO hits
+#the accessions from MAGs are downloaded (Nayfach et al., 2021), the mmox genes are compared to the MAGs database and saved in an excel file
+
+
 install.packages("readxl")
 library("readxl")
 
