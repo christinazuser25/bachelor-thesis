@@ -1,29 +1,24 @@
+#Linux code, refseq sMMO hits
+#the accessions from refseq are downloaded from NCBI, the mmox genes are compared to the refseq database and saved in a text file
 
-
-	# add filename to first column of all files
 for i in *.txt; do nawk '{print FILENAME"\t"$0}' $i > $i.bk; mv $i.bk $i -f ; done
 
 	# will delete header until 4th row
 	# -f is added for computer not to ask if this procedure should be done for every txt file
-
 for i in *.txt
 do
 tail -n +4 $i > $i.bk; mv $i.bk $i -f
 done
 		
 	#will delete tail, the last 10 rows
-
 for i in *.txt
 do
 head -n -10 $i > $i.bk; mv $i.bk $i -f
 done
 
-	#will delete all empty files,from 9143, 147 files remain, 1.6 percent of original
-	#for refseq, from 24959, 758 files, 3.0 percent of original
- 
+	#will delete all empty files
 find ./ -size  0 -print -delete
 
 	#merges all hits into one file
+cat *.txt > smmo.hits.final.refseq.txt
 
-cat *.txt > merged_xmo.txt
-cat *.txt > merged_xmo_refseq.txt
